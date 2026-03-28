@@ -55,7 +55,7 @@ export default function Analyse() {
     setError(null)
 
     try {
-      const res = await fetch('http://localhost:8000/predict', {
+      const res = await fetch('https://smartphone-addiction-system.onrender.com/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
