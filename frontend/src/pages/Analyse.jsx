@@ -50,36 +50,79 @@ export default function Analyse() {
   }
 
   const handlePredict = async () => {
-    setLoading(true)
-    setResult(null)
-    setError(null)
+  setLoading(true)
+  setResult(null)
+  setError(null)
 
-    try {
-      const res = await fetch('https://smartphone-addiction-system.onrender.com/predict', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          screen_time: inputs.screen_time,
-          unlocks: Math.round(inputs.unlocks),
-          social_media: inputs.social_media,
-          night_usage: inputs.night_usage,
-          sleep_hours: inputs.sleep_hours,
-        }),
-      })
+  try {
+    const res = await fetch('https://smartphone-addiction-system.onrender.com/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        screen_time: inputs.screen_time,
+        unlocks: Math.round(inputs.unlocks),
+        social_media: inputs.social_media,
+        night_usage: inputs.night_usage,
+        sleep_hours: inputs.sleep_hours,
+      }),
+    })
 
-      if (!res.ok) {
-        const errBody = await res.json().catch(() => ({}))
-        throw new Error(errBody.detail || `Server returned ${res.status}`)
-      }
-
-      const data = await res.json()
-      setResult(data.prediction)
-    } catch (err) {
-      setError(err.message || 'Unable to connect to the prediction server. Please ensure the backend is running at http://localhost:8000.')
-    } finally {
-      setLoading(false)
+    // Better error handling
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(`Server error: ${res.status}`)
     }
+
+    const data = await res.json()
+
+    // Safety check
+    if (!data || !data.prediction) {
+      throw new Error("Invalid response from server")
+    }
+
+    setResult(data.prediction)
+
+  } catch (err) {
+    console.error("Prediction error:", err)
+
+    setError(
+      "Server may be waking up (Render free tier). Wait 20–30 seconds and try again."
+    )
+  } finally {
+    setLoading(false)
   }
+}
+  // const handlePredict = async () => {
+  //   setLoading(true)
+  //   setResult(null)
+  //   setError(null)
+
+  //   try {
+  //     const res = await fetch('https://smartphone-addiction-system.onrender.com/predict', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         screen_time: inputs.screen_time,
+  //         unlocks: Math.round(inputs.unlocks),
+  //         social_media: inputs.social_media,
+  //         night_usage: inputs.night_usage,
+  //         sleep_hours: inputs.sleep_hours,
+  //       }),
+  //     })
+
+  //     if (!res.ok) {
+  //       const errBody = await res.json().catch(() => ({}))
+  //       throw new Error(errBody.detail || `Server returned ${res.status}`)
+  //     }
+
+  //     const data = await res.json()
+  //     setResult(data.prediction)
+  //   } catch (err) {
+  //     setError(err.message || 'Unable to connect to the prediction server. Please ensure the backend is running at http://localhost:8000.')
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   const handleDownload = async () => {
     if (!result) return
