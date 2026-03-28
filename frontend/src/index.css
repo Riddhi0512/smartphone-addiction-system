@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background-color: #faf8ff;
+    color: #3d3450;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #d4b3ff;
+    color: #3d3450;
+  }
+}
+
+@layer components {
+  /* ─── Glass card ─────────────────────────────────── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 179, 255, 0.25);
+    border-radius: 24px;
+    box-shadow:
+      0 4px 32px rgba(155, 77, 255, 0.06),
+      0 1px 0 rgba(255,255,255,0.9) inset;
+  }
+
+  .glass-card-sm {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 179, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(155, 77, 255, 0.05);
+  }
+
+  /* ─── Range Slider ───────────────────────────────── */
+  .custom-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 99px;
+    outline: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    width: 100%;
+  }
+
+  .custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #b880ff;
+    box-shadow: 0 2px 8px rgba(155, 77, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .custom-range::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 16px rgba(155, 77, 255, 0.4);
+  }
+
+  .custom-range::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #b880ff;
+    box-shadow: 0 2px 8px rgba(155, 77, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  /* ─── Toggle Switch ──────────────────────────────── */
+  .toggle-track {
+    position: relative;
+    display: inline-flex;
+    height: 28px;
+    width: 52px;
+    cursor: pointer;
+    border-radius: 99px;
+    transition: background-color 0.25s ease;
+  }
+
+  .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .toggle-track.on .toggle-thumb {
+    transform: translateX(24px);
+  }
+
+  /* ─── Gradient text ──────────────────────────────── */
+  .gradient-text {
+    background: linear-gradient(135deg, #9b4dff 0%, #ff6b8a 60%, #ffb81c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Shimmer button ─────────────────────────────── */
+  .btn-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255,255,255,0.25) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* ─── Noise texture overlay ──────────────────────── */
+  .noise-overlay::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── Orb blobs ──────────────────────────────────── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+@layer utilities {
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
+  .delay-600 { animation-delay: 0.6s; }
+  .delay-700 { animation-delay: 0.7s; }
+}
