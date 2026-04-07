@@ -6,14 +6,14 @@ A full-stack web application that predicts smartphone addiction level (Low / Mod
 
 🔗 Live Demo: https://smartphone-addiction-system.vercel.app
 
-## 🚀 Features
+## Features
 - Predicts addiction level (Low / Moderate / High)
 - ML model (Random Forest)
 - FastAPI backend (Render)
 - React frontend (Vercel)
 - Real-time predictions
 
-## 🛠 Tech Stack
+##  Tech Stack
 - Frontend: React + Vite
 - Backend: FastAPI
 - ML: Scikit-learn
